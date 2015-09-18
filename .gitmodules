@@ -1,0 +1,3 @@
+[submodule "ChronoSync"]
+	path = ChronoSync
+	url = https://github.com/spirosmastorakis/ChronoSync
