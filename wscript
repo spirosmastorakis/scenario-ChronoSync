@@ -65,14 +65,25 @@ def configure(conf):
         conf.define('NS3_LOG_ENABLE', 1)
         conf.define('NS3_ASSERT_ENABLE', 1)
 
+    conf.write_config_header('ChronoSync/config.hpp', remove=False)
+
 def build (bld):
     deps =  ' '.join (['ns3_'+dep for dep in MANDATORY_NS3_MODULES + OTHER_NS3_MODULES]).upper ()
+
+    chronoSync = bld.objects (
+        target = "ChronoSync",
+        features = ["cxx"],
+        source = bld.path.ant_glob("ChronoSync/src/**/*.cpp"),
+        includes = "ChronoSync",
+        export_includes = "ChronoSync",
+        use = deps
+        )
 
     common = bld.objects (
         target = "extensions",
         features = ["cxx"],
         source = bld.path.ant_glob(['extensions/**/*.cc', 'extensions/**/*.cpp']),
-        use = deps,
+        use = deps + " ChronoSync",
         )
 
     for scenario in bld.path.ant_glob (['scenarios/*.cc']):
@@ -82,7 +93,8 @@ def build (bld):
             features = ['cxx'],
             source = [scenario],
             use = deps + " extensions",
-            includes = "extensions"
+            includes = "extensions",
+            export_includes = "extensions"
             )
 
     for scenario in bld.path.ant_glob (['scenarios/*.cpp']):
@@ -91,8 +103,7 @@ def build (bld):
             target = name,
             features = ['cxx'],
             source = [scenario],
-            use = deps + " extensions",
-            includes = "extensions"
+            use = deps + " extensions ChronoSync"
             )
 
 def shutdown (ctx):
