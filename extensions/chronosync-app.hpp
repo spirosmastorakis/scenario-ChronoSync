@@ -22,6 +22,7 @@
 #include "ns3/ndnSIM-module.h"
 #include "ns3/integer.h"
 #include "ns3/string.h"
+#include "ns3/boolean.h"
 
 #include "chronosync.hpp"
 
@@ -45,6 +46,8 @@ public:
                     MakeNameAccessor(&ChronoSyncApp::m_routingPrefix), MakeNameChecker())
       .AddAttribute("MinNumberMessages", "Minimum number of messages", IntegerValue(1),
                     MakeIntegerAccessor(&ChronoSyncApp::m_minNumberMessages), MakeIntegerChecker<int32_t>())
+      .AddAttribute("PeriodicPublishing", "Periodic data publishing", BooleanValue(false),
+                    MakeBooleanAccessor(&ChronoSyncApp::m_periodicPublishing), MakeBooleanChecker())
       .AddAttribute("MaxNumberMessages", "Maximum number of messages", IntegerValue(2),
                     MakeIntegerAccessor(&ChronoSyncApp::m_maxNumberMessages), MakeIntegerChecker<int32_t>());
 
@@ -61,7 +64,12 @@ protected:
     m_instance->setUserPrefix(m_userPrefix);
     m_instance->setRoutingPrefix(m_routingPrefix);
     m_instance->initializeSync();
-    m_instance->run();
+    if (m_periodicPublishing) {
+      m_instance->runPeriodically();
+    }
+    else {
+      m_instance->run();
+    }
   }
 
   virtual void
@@ -77,6 +85,7 @@ private:
   Name m_routingPrefix;
   int m_minNumberMessages;
   int m_maxNumberMessages;
+  bool m_periodicPublishing;
 };
 
 } // namespace ndn

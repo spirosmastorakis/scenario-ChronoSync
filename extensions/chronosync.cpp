@@ -65,6 +65,17 @@ ChronoSync::delayedInterest(int id)
 }
 
 void
+ChronoSync::publishDataPeriodically(int id)
+{
+  m_scheduler.scheduleEvent(ndn::time::milliseconds(m_rangeUniformRandom()),
+                            bind(&ChronoSync::delayedInterest, this, 1));
+
+  m_scheduler.scheduleEvent(ndn::time::milliseconds(m_rangeUniformRandom()),
+                            bind(&ChronoSync::publishDataPeriodically, this, 1));
+}
+
+
+void
 ChronoSync::printData(const shared_ptr<const Data>& data)
 {
   Name::Component peerName = data->getName().at(3);
@@ -114,6 +125,13 @@ ChronoSync::run()
 {
   m_scheduler.scheduleEvent(ndn::time::milliseconds(m_rangeUniformRandom()),
                             bind(&ChronoSync::delayedInterest, this, 1));
+}
+
+void
+ChronoSync::runPeriodically()
+{
+  m_scheduler.scheduleEvent(ndn::time::milliseconds(m_rangeUniformRandom()),
+                            bind(&ChronoSync::publishDataPeriodically, this, 1));
 }
 
 } // namespace ndn

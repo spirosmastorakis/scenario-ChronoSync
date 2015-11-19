@@ -74,27 +74,35 @@ main(int argc, char *argv[])
   ndnHelper.InstallAll();
 
   // Choosing forwarding strategy
-  ndn::StrategyChoiceHelper::InstallAll("/ndn", "/localhost/nfd/strategy/multicast");
+  ndn::StrategyChoiceHelper::InstallAll("/ndn", "ndn:/localhost/nfd/strategy/multicast");
 
   // Installing applications
 
-  // Consumer
+  // Peer 1
   ndn::AppHelper peer1("ChronoSyncApp");
   peer1.SetAttribute("SyncPrefix", StringValue("/ndn/broadcast/sync"));
   peer1.SetAttribute("UserPrefix", StringValue("/peer1"));
-  peer1.SetAttribute("RoutingPrefix", StringValue("/test"));
+  peer1.SetAttribute("RoutingPrefix", StringValue("/ndn"));
   peer1.SetAttribute("MinNumberMessages", StringValue("1"));
   peer1.SetAttribute("MaxNumberMessages", StringValue("100"));
+  peer1.SetAttribute("PeriodicPublishing", StringValue("true"));
   peer1.Install(nodes.Get(0)).Start(Seconds(2));
 
-  // Producer
+  // Peer 2
   ndn::AppHelper peer2("ChronoSyncApp");
   peer2.SetAttribute("SyncPrefix", StringValue("/ndn/broadcast/sync"));
   peer2.SetAttribute("UserPrefix", StringValue("/peer2"));
-  peer2.SetAttribute("RoutingPrefix", StringValue("/test"));
+  peer2.SetAttribute("RoutingPrefix", StringValue("/ndn"));
   peer2.SetAttribute("MinNumberMessages", StringValue("1"));
   peer2.SetAttribute("MaxNumberMessages", StringValue("100"));
+  // peer2.SetAttribute("PeriodicPublishing", StringValue("true"));
   peer2.Install(nodes.Get(2)).Start(Seconds(2));
+
+  // Manually configure FIB routes
+  ndn::FibHelper::AddRoute(nodes.Get(0), "/ndn/broadcast/sync", nodes.Get(1), 1);
+  ndn::FibHelper::AddRoute(nodes.Get(1), "/ndn/broadcast/sync", nodes.Get(2), 1);
+  ndn::FibHelper::AddRoute(nodes.Get(2), "/ndn/broadcast/sync", nodes.Get(1), 1);
+  ndn::FibHelper::AddRoute(nodes.Get(1), "/ndn/broadcast/sync", nodes.Get(0), 1);
 
   Simulator::Stop(Seconds(20.0));
 

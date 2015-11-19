@@ -43,6 +43,9 @@ public:
   delayedInterest(int id);
 
   void
+  publishDataPeriodically(int id);
+
+  void
   printData(const shared_ptr<const Data>& data);
 
   void
@@ -53,6 +56,9 @@ public:
 
   void
   run();
+
+  void
+  runPeriodically();
 
 private:
   boost::asio::io_service m_ioService;
