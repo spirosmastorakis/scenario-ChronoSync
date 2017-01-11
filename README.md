@@ -4,10 +4,10 @@ Prerequisites
 Custom version of NS-3 (tagged as `ns-3.23-dev-ndnSIM-2.1`) and ndnSIM 2.1 (tagged as `ndnSIM-2.1`)
 needs to be installed.
 
-The code should also work with the latest version of ndnSIM, but it is not guaranteed.
+It may work with more recent ndnSIM versions (>= 2.1).
 
-    mkdir ns-dev
-    cd ns-dev
+    mkdir ndnSIM
+    cd ndnSIM
 
     git clone https://github.com/named-data-ndnSIM/ns-3-dev ns-3
     (cd ns-3; git checkout ns-3.23-dev-ndnSIM-2.1)
@@ -21,7 +21,18 @@ The code should also work with the latest version of ndnSIM, but it is not guara
     ./waf
     sudo ./waf install
 
-    cd ../my-simulations
+    # When using Linux, run
+    # sudo ldconfig
+
+    # When using Freebsd, run
+    # sudo ldconfig -a
+
+    cd ..
+    git clone https://github.com/named-data-ndnSIM/scenario-template.git my-simulations
+    cd my-simulations
+
+    ./waf configure
+    ./waf --run scenario
 
 After which you can proceed to compile and run the code
 
