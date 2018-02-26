@@ -1,18 +1,18 @@
 Prerequisites
 =============
 
-Custom version of NS-3 (tagged as `ns-3.23-dev-ndnSIM-2.1`) and ndnSIM 2.1 (tagged as `ndnSIM-2.1`)
+Custom version of NS-3 (branch `ndnSIM-v2.5`) and ndnSIM 2.1 (tagged as `ndnSIM-2.5`)
 needs to be installed.
 
-It may work with more recent ndnSIM versions (>= 2.1).
+It may or may not work with more recent ndnSIM versions (> 2.5).
 
     mkdir ndnSIM
     cd ndnSIM
 
     git clone https://github.com/named-data-ndnSIM/ns-3-dev ns-3
-    (cd ns-3; git checkout ns-3.23-dev-ndnSIM-2.1)
-    git clone https://github.com/named-data-ndnSIM/ndnSIM ns-3/src/ndnSIM
-    (cd ns-3/src/ndnSIM; git checkout ndnSIM-2.1)
+    (cd ns-3; git checkout ndnSIM-v2.5)
+    git clone --recursive https://github.com/named-data-ndnSIM/ndnSIM ns-3/src/ndnSIM
+    (cd ns-3/src/ndnSIM; git checkout ndnSIM-2.5)
 
     git clone --recursive https://github.com/spirosmastorakis/scenario-ChronoSync
 

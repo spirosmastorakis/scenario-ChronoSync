@@ -23,6 +23,8 @@
 
 #include <ndn-cxx/face.hpp>
 
+#include <boost/random.hpp>
+
 namespace ndn {
 
 class ChronoSync
@@ -46,7 +48,7 @@ public:
   publishDataPeriodically(int id);
 
   void
-  printData(const shared_ptr<const Data>& data);
+  printData(const Data& data);
 
   void
   processSyncUpdate(const std::vector<chronosync::MissingDataInfo>& updates);
