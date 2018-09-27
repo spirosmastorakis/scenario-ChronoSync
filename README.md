@@ -1,10 +1,10 @@
 Prerequisites
 =============
 
-Custom version of NS-3 (branch `ndnSIM-v2.5`) and ndnSIM 2.1 (tagged as `ndnSIM-2.5`)
+Custom version of NS-3 (branch `ndnSIM-v2.5`) and ndnSIM 2.6 (tagged as `ndnSIM-2.6`)
 needs to be installed.
 
-It may or may not work with more recent ndnSIM versions (> 2.5).
+It may or may not work with more recent ndnSIM versions (> 2.6).
 
     mkdir ndnSIM
     cd ndnSIM
@@ -12,7 +12,7 @@ It may or may not work with more recent ndnSIM versions (> 2.5).
     git clone https://github.com/named-data-ndnSIM/ns-3-dev ns-3
     (cd ns-3; git checkout ndnSIM-v2.5)
     git clone --recursive https://github.com/named-data-ndnSIM/ndnSIM ns-3/src/ndnSIM
-    (cd ns-3/src/ndnSIM; git checkout ndnSIM-2.5)
+    (cd ns-3/src/ndnSIM; git checkout ndnSIM-2.6)
 
     git clone --recursive https://github.com/spirosmastorakis/scenario-ChronoSync
 
@@ -32,7 +32,7 @@ It may or may not work with more recent ndnSIM versions (> 2.5).
     cd my-simulations
 
     ./waf configure
-    ./waf --run scenario
+    ./waf --run <scenario>
 
 After which you can proceed to compile and run the code
 
