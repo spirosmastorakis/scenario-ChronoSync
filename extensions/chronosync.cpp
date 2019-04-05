@@ -78,7 +78,7 @@ ChronoSync::publishDataPeriodically(int id)
 void
 ChronoSync::printData(const Data& data)
 {
-  Name::Component peerName = data.getName().at(3);
+  Name::Component peerName = data.getName().at(1);
 
   std::string s (reinterpret_cast<const char*>(data.getContent().value()),
                  data.getContent().value_size());
